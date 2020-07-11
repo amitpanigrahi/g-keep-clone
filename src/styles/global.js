@@ -30,4 +30,9 @@ export const GlobalStyles = createGlobalStyle`
   a {
     color: ${({ theme }) => theme.text};
   }
+  .cursor {
+    &_pointer {
+        cursor: pointer;   
+    }
+  }
 `;
