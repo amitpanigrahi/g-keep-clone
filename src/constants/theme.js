@@ -13,6 +13,7 @@ const themeDark = {
 };
 
 export const lightTheme = {
+    isLight: true,
     body: '#e2e2e2',
     text: '#363537',
     toggleBorder: '#fff',
@@ -20,6 +21,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
+    isLight: false,
     body: '#363537',
     text: '#FAFAFA',
     toggleBorder: '#6B8096',

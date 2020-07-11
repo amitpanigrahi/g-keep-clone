@@ -35,4 +35,23 @@ export const GlobalStyles = createGlobalStyle`
         cursor: pointer;   
     }
   }
+  .d {
+    &_flex {
+        display: flex;
+    }
+  }
+  .align {
+    &_items {
+        &_center {
+            align-items: center;
+        }
+    }
+  }
+  .justify {
+    &_content {
+        &_center {
+            justify-content: center;
+        }
+    }
+  }
 `;

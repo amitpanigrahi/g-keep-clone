@@ -6,7 +6,7 @@ export const StyledSearchBar = styled("div")`
     align-items: center;
     justify-content: 
     overflow: hidden;
-    background: rgba(241,243,244, ${({isLight}) => isLight ? "1" : "0.24"});
+    background: rgba(241,243,244, ${({theme}) => theme.isLight ? "1" : "0.24"});
     border-radius: 8px;
     border: 1px solid transparent;
     transition: background 100ms ease-in,width 100ms ease-out;

@@ -5,7 +5,7 @@ import HamBurger from "../HamBurger";
 import {StyledHeaderWrapper} from "./styles";
 import SearchBar from "../SearchBar";
 
-const Header = ({title = "Notes"}) => {
+const Header = ({title = "Notes", toggleSidebar}) => {
     const themeState = useTheme();
     const {
         theme,
@@ -14,7 +14,7 @@ const Header = ({title = "Notes"}) => {
     return (
         <StyledHeaderWrapper>
             <div className={"burger-title"}>
-                <HamBurger/>
+                <HamBurger onClick={toggleSidebar} />
                 <div className={"title"}>{title}</div>
             </div>
             <SearchBar/>
