@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../Header";
-import Sidebar from "../Sidebar";
-import Display from "../Display";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
+import Display from "../../components/Display";
 
 const WorkSpaceComponent = () => {
     return (
