@@ -20,6 +20,7 @@ export const StyledNoteCard = styled("div")`
     }
     &:hover {
         cursor: pointer;
-        box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
+        box-shadow:  ${({theme}) => theme.isLight ? "0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149)" :
+    "0 1px 2px 0 rgba(360, 360, 360, 0.2), 0 1px 3px 1px rgba(360, 360, 360, 0.5)"};
     }
 `;

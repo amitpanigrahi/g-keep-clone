@@ -54,4 +54,8 @@ export const GlobalStyles = createGlobalStyle`
         }
     }
   }
+  .display-body {
+    height: 90vh;
+    max-height: calc(100% - 70vh);
+  }
 `;

@@ -12,6 +12,8 @@ export const StyledHeaderWrapper = styled("div")({
     transition: "background-color .4s",
     minWidth: "min-content",
     boxShadow: "inset 0 -1px 0 0 #5f6368",
+    height: "10vh",
+    minHeight: "70px",
     ".burger-title": {
         display: "flex",
         alignItems: "center",

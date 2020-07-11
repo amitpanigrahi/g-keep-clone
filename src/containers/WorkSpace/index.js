@@ -8,7 +8,7 @@ const WorkSpaceComponent = () => {
     return (
         <div>
             <Header toggleSidebar={() => setSideBar(!expandedSidebar)}/>
-            <div className={"d_flex"}>
+            <div className={"d_flex display-body"}>
                 <Sidebar isExpanded={expandedSidebar}/>
                 <Display/>
             </div>
