@@ -13,6 +13,12 @@ export const StyledSidebar = styled("div")({
         },
         ".icon-wrap": {
             paddingRight: "20px",
+        },
+        ".label": {
+            letterSpacing: ".01785714em",
+            fontFamily: `'Google Sans',Roboto,Arial,sans-serif`,
+            fontSize: ".875rem",
+            fontWeight: "bold",
         }
     }
 });

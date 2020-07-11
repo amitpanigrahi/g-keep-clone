@@ -23,7 +23,7 @@ const Sidebar = ({isExpanded}) => {
                 } = val;
                 return (
                     <div key={i} className={`item d_flex align_items_center ${i ? "active" : ""}`}>
-                        <span className={"icon-wrap"}>{icon}</span>{isExpanded ? label : ""}
+                        <span className={"icon-wrap"}>{icon}</span><span className={"label"}>{isExpanded ? label : ""}</span>
                     </div>
                 )
             })}
