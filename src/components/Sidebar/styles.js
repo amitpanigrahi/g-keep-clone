@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const StyledSidebar = styled("div")({
+    height: "100%",
+    transition: "all 0.5s ease-in-out",
+    minWidth: ({ isExpanded }) => isExpanded ? "100px" : "40px",
+    background: ({ theme }) => theme.body,
     ".item": {
         padding: "12.5px 25px",
         cursor: "pointer",
@@ -20,5 +24,8 @@ export const StyledSidebar = styled("div")({
             fontSize: ".875rem",
             fontWeight: "bold",
         }
+    },
+    '@media(max-width: 787px)': {
+        position: "absolute"
     }
 });

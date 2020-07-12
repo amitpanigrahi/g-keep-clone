@@ -14,6 +14,7 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     transition: all 0.25s linear;
+    overflow: hidden;
   }
   footer {
     position: absolute;
@@ -52,10 +53,22 @@ export const GlobalStyles = createGlobalStyle`
         &_center {
             justify-content: center;
         }
+        &_between {
+            justify-content: space-between;
+        }
     }
   }
   .display-body {
     height: 90vh;
     max-height: calc(100% - 70vh);
+  }
+  .box {
+    box-shadow:  ${({theme}) => theme.isLight ? "0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149)" :
+    "0 1px 2px 0 rgba(360, 360, 360, 0.2), 0 1px 3px 1px rgba(360, 360, 360, 0.5)"};
+  }
+  .flex {
+    &_column {
+        flex-direction: column;
+    }
   }
 `;

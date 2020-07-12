@@ -1,35 +1,50 @@
 import React from "react";
 import {StyledSidebar} from "./styles";
 import {ARCHIVE_ICON, NOTES_ICON} from "../../constants/imgMap";
+import {activeTab} from "../../selectors/ui";
+import {connect} from "react-redux";
+import {changeTab} from "../../actions";
+import TabItem from "./TabItem";
 
 const optionList = [
     {
         icon: NOTES_ICON,
         label: "Notes",
+        key: "active",
     },
     {
         icon: ARCHIVE_ICON,
         label: "Archived",
+        key: "archive",
     },
 ];
 
-const Sidebar = ({isExpanded}) => {
+const Sidebar = (props) => {
+    const {
+        isExpanded,
+        s__activeTab,
+        d__changeTab
+    } = props;
+
+    const changeTab = key => d__changeTab({activeTab: key});
     return (
-        <StyledSidebar>
+        <StyledSidebar isExpanded={isExpanded}>
             {optionList.map((val, i) => {
-                const {
-                    icon,
-                    label,
-                } = val;
                 return (
-                    <div key={i} className={`item d_flex align_items_center ${i ? "active" : ""}`}>
-                        <span className={"icon-wrap"}>{icon}</span><span className={"label"}>{isExpanded ? label : ""}</span>
-                    </div>
+                    <TabItem key={i} data={val} isExpanded={isExpanded} isActive={s__activeTab === val.key}
+                             handleChange={() => changeTab(val.key)}/>
                 )
             })}
         </StyledSidebar>
     )
 };
 
+const mapStateToProps = (state) => ({
+    s__activeTab: activeTab(state)
+});
 
-export default Sidebar;
+const mapDispatchToProps = (dispatch) => ({
+    d__changeTab: (data) => dispatch(changeTab.request(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {CLOSE_ICON, SEARCH_ICON} from "../../constants/imgMap";
 import {StyledInputContainer, StyledSearchBar} from "./styles";
-import {trimLeft} from "../../utils/helper";
+import {debounce, trimLeft} from "../../utils/helper";
 
 const SearchBar = () => {
     const [searchQuery, setSearch] = useState("");
