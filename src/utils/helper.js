@@ -32,14 +32,20 @@ export const uuidGenerator = () => {
 
 export const manageNoteListUpdate = (listData = [], data = {}) => {
   let resp = [...listData];
-  const filteredIndex = listData.findIndex(val => val.id === data.id);
+  const filteredIndex = listData.findIndex(val => (val && val.id === data.id));
+  const isValid = data.note || data.title;
   if (filteredIndex >= 0) {
-      resp[filteredIndex] = {...resp[filteredIndex], ...data};
+      if (!isValid) {
+          delete resp[filteredIndex];
+      }
+      else {
+          resp[filteredIndex] = {...resp[filteredIndex], ...data};
+      }
   }
-  else {
-      resp.push(data);
+  else if (isValid) {
+          resp.push(data);
   }
-  return resp;
+  return resp.filter(val => !!val);
 };
 
 export const timeSort = (a, b, sortByField = "updated_at") =>  (_get(b, sortByField, 0) - _get(a, sortByField, 0));

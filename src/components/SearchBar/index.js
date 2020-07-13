@@ -4,12 +4,13 @@ import {StyledInputContainer, StyledSearchBar} from "./styles";
 import {debounce, trimLeft} from "../../utils/helper";
 import {updateUiSettings} from "../../actions";
 import {connect} from "react-redux";
+import {searchQuery as getSearchQuery} from "../../selectors/ui";
 
-const SearchBar = ({d__updateUiSettings}) => {
-    const [searchQuery, setSearch] = useState("");
+const SearchBar = ({s__searchQuery, d__updateUiSettings}) => {
+    const [searchQuery, setSearch] = useState(s__searchQuery);
     const [inputFocused, setInputFocus] = useState(false);
     useEffect(() => {
-        debounce(() => d__updateUiSettings({searchQuery}), 1500)();
+        debounce(() => d__updateUiSettings({searchQuery}), 1000)();
     }, [searchQuery]);
     return (
         <StyledSearchBar className={inputFocused ? "focus" : ""}>
@@ -22,8 +23,12 @@ const SearchBar = ({d__updateUiSettings}) => {
     )
 };
 
+const mapStateToProps = state => ({
+    s__searchQuery: getSearchQuery(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
     d__updateUiSettings: (data) => dispatch(updateUiSettings.request(data)),
 });
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
