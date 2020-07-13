@@ -50,7 +50,6 @@ $ npm start
  - Adding in-house masonry layout to the note cards.
  - Improving the header module for mobile device.
  - Improving the state storing logic.
- - Adding feature to permanently delete a note.
  - Adding cron to structuring the stored note in some interval.
 
 
