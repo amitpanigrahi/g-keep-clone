@@ -8,7 +8,7 @@ import {
     TRASH_RESTORE_ICON,
     UN_ARCHIVE_ICON
 } from "../../constants/imgMap";
-import {trimLeft, uuidGenerator} from "../../utils/helper";
+import {debounce, trimLeft, uuidGenerator} from "../../utils/helper";
 import {connect} from "react-redux";
 import {createOrUpdateNoteList} from "../../actions";
 import ActionIcon from "../ActionIcon";
@@ -41,7 +41,7 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
         setTitle("");
         setNote("");
     };
-    const updateDoc = (obj = {}) => {
+    const updateDoc = (obj = {}, isAutoSave = false) => {
         let updatedObj = {...noteObj, ...obj, updated_at: new Date().getTime()};
 
         if (!cardTitle && !cardNote) {
@@ -56,8 +56,10 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
         if (updatedObj.id) {
             d__updateNoteList(updatedObj);
         }
-        handleClose && handleClose();
-        restState();
+        if (!isAutoSave) {
+            handleClose && handleClose();
+            restState();
+        }
     };
 
     const handleNoteChanges = () => {
@@ -85,6 +87,11 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
     const updateNote = (obj = {}) => {
         setNoteObj({...noteObj, ...obj})
     };
+    useEffect(() => {
+        if (noteObj.id) {
+            debounce(() => updateDoc({}, true), 1500)();
+        }
+    }, [noteObj]);
 
     const {
         status = "",

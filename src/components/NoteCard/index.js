@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import {StyledNoteCard} from "./styles";
-import Modal from "../Modal";
-import NoteCreator from "../NoteCreator";
 
 const NoteCard = ({data = {}, handleClick}) => {
     const {

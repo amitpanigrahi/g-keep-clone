@@ -13,6 +13,7 @@ export const Overlay = styled("div")`
   align-items: center;
   visibility: ${(props) => (props.hiddenProp ? 'hidden' : 'visible')};
   opacity: ${(props) => (props.hiddenProp ? '0' : '1')};
+  cursor: pointer;
   &.mob-only {
     display: none;
   }

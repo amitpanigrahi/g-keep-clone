@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import NoteCard from "../NoteCard";
 import {StyledNoteListContainer, StyledDisplayWrapper} from "./styles";
 import NoteCreator from "../NoteCreator";
@@ -8,9 +8,13 @@ import RIT from "../_generic/RenderIfTrue";
 import NoDataAvailable from "../common/NoDataAvailable";
 import Modal from "../Modal";
 import _isEmpty from "lodash/isEmpty";
+import {setModalNote} from "../../actions";
+import {modalData} from "../../selectors/ui";
 
-const Display = ({s__allNotes, s__pinnedNotes}) => {
-    const [showNote, setNoteModalView] = useState({});
+const Display = ({s__allNotes, s__pinnedNotes, s__modalData, d__setModalData}) => {
+    const setNoteModalView = (data) => {
+        d__setModalData(data);
+    };
     return (
         <StyledDisplayWrapper>
             <NoteCreator/>
@@ -33,9 +37,9 @@ const Display = ({s__allNotes, s__pinnedNotes}) => {
             <RIT cnd={!s__pinnedNotes.length && !s__allNotes.length}>
                 <NoDataAvailable />
             </RIT>
-            <RIT cnd={!_isEmpty(showNote)}>
-                <Modal>
-                    <NoteCreator isFocused={true} handleClose={() => setNoteModalView({})} data={showNote}/>
+            <RIT cnd={!_isEmpty(s__modalData) && s__modalData.id}>
+                <Modal onClose={() => setNoteModalView({})}>
+                    <NoteCreator isFocused={true} handleClose={() => setNoteModalView({})} data={s__modalData}/>
                 </Modal>
             </RIT>
         </StyledDisplayWrapper>
@@ -45,6 +49,11 @@ const Display = ({s__allNotes, s__pinnedNotes}) => {
 const mapStateToProps = state => ({
     s__allNotes: filterBasedNotes(state),
     s__pinnedNotes: pinnedNotes(state),
+    s__modalData: modalData(state),
 });
 
-export default connect(mapStateToProps, null)(Display);
+const mapDispatchToProps = dispatch => ({
+    d__setModalData: data => dispatch(setModalNote.request(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Display);
