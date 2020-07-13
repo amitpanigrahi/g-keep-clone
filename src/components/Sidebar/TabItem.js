@@ -3,7 +3,7 @@ import React from "react";
 const TabItem = ({handleChange, isActive = false, data = {}, isExpanded}) => {
     const {
         icon,
-        label,
+        activeTabLabel: label,
     } = data;
     return (
         <div onClick={handleChange} className={`item d_flex align_items_center ${isActive ? "active" : ""}`}>

@@ -1,30 +1,11 @@
 import React from "react";
 import {StyledSidebar} from "./styles";
-import {ARCHIVE_ICON, NOTES_ICON, THRASH_ICON} from "../../constants/imgMap";
-import {activeTab} from "../../selectors/ui";
 import {connect} from "react-redux";
 import {updateUiSettings} from "../../actions";
 import TabItem from "./TabItem";
 import {Overlay} from "../Modal/styles";
 import RIT from "../_generic/RenderIfTrue";
-
-const optionList = [
-    {
-        icon: NOTES_ICON,
-        label: "Notes",
-        key: "active",
-    },
-    {
-        icon: ARCHIVE_ICON,
-        label: "Archived",
-        key: "archive",
-    },
-    {
-        icon: THRASH_ICON,
-        label: "Trash",
-        key: "deleted",
-    },
-];
+import {optionList} from "../../constants/sidebarOptions";
 
 const Sidebar = (props) => {
     const {
@@ -36,7 +17,7 @@ const Sidebar = (props) => {
 
     const isSm = window.innerWidth < 768;
     const changeTab = val => {
-        d__updateUiSettings({activeTab: val.key, activeTabLabel: val.label});
+        d__updateUiSettings({...val});
         if (isSm) {
             toggleSidebar()
         }
@@ -49,7 +30,7 @@ const Sidebar = (props) => {
             <StyledSidebar isExpanded={isExpanded}>
                 {optionList.map((val, i) => {
                     return (
-                        <TabItem key={i} data={val} isExpanded={isExpanded} isActive={activeTab === val.key}
+                        <TabItem key={i} data={val} isExpanded={isExpanded} isActive={activeTab === val.activeTab}
                                  handleChange={() => changeTab(val)}/>
                     )
                 })}

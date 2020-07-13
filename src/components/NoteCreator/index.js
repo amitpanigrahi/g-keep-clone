@@ -26,6 +26,11 @@ const initialNoteObj = {
 };
 
 const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClose}) => {
+    const [isMounted, setMount] = useState(false);
+    const {
+        title: prevTitle = "",
+        note: prevNote = "",
+    } = data;
     const [noteObj, setNoteObj] = useState({...initialNoteObj, ...data});
     const {
         title = "",
@@ -35,7 +40,7 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
     const [focused, setFocused] = useState(isFocused);
     const [cardTitle, setTitle] = useState(title);
     const [cardNote, setNote] = useState(note);
-    const restState = () => {
+    const resetState = () => {
         setNoteObj(initialNoteObj);
         setFocused(false);
         setTitle("");
@@ -58,14 +63,14 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
         }
         if (!isAutoSave) {
             handleClose && handleClose();
-            restState();
+            resetState();
         }
     };
 
     const handleNoteChanges = () => {
         if (!!!noteObj.id) {
             const newNote = {
-                ...initialNoteObj,
+                ...noteObj,
                 note: cardNote,
                 title: cardTitle,
                 created_at: new Date().getTime(),
@@ -78,18 +83,21 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
         }
     };
     useEffect(() => {
+        setMount(true);
         descRef.current.focus();
         descRef.current.setSelectionRange(cardNote.length, cardNote.length);
     }, []);
     useEffect(() => {
-        handleNoteChanges();
+        if (isMounted) {
+            handleNoteChanges();
+        }
     }, [cardTitle, cardNote]);
     const updateNote = (obj = {}) => {
         setNoteObj({...noteObj, ...obj})
     };
     useEffect(() => {
-        if (noteObj.id) {
-            debounce(() => updateDoc({}, true), 1500)();
+        if (noteObj.id && isMounted) {
+            debounce(() => updateDoc({note: cardNote, title: cardTitle}, true), 1500)();
         }
     }, [noteObj]);
 

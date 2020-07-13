@@ -1,10 +1,10 @@
 import {REQUEST} from "../actions/actionCreator";
 import {SHOW_MODAL_NOTE, UPDATE_UI_SETTINGS} from "../actions/actionTypes";
 import {combineReducers} from "redux";
+import {optionList} from "../constants/sidebarOptions";
 
 const initialState = {
-    activeTab: "active",
-    activeTabLabel: "Notes",
+    ...optionList[0],
     searchQuery: "",
 };
 

@@ -9,9 +9,10 @@ import NoDataAvailable from "../common/NoDataAvailable";
 import Modal from "../Modal";
 import _isEmpty from "lodash/isEmpty";
 import {setModalNote} from "../../actions";
-import {modalData} from "../../selectors/ui";
+import {activeTab, modalData, noActiveTabDataText} from "../../selectors/ui";
+import {optionList} from "../../constants/sidebarOptions";
 
-const Display = ({s__allNotes, s__pinnedNotes, s__modalData, d__setModalData}) => {
+const Display = ({s__activeTab, s__noActiveTabDataText = "", s__allNotes, s__pinnedNotes, s__modalData, d__setModalData}) => {
     const setNoteModalView = (data) => {
         d__setModalData(data);
     };
@@ -35,7 +36,7 @@ const Display = ({s__allNotes, s__pinnedNotes, s__modalData, d__setModalData}) =
                 </RIT>
             </StyledNoteListContainer>
             <RIT cnd={!s__pinnedNotes.length && !s__allNotes.length}>
-                <NoDataAvailable />
+                <NoDataAvailable icon={optionList.find(val => val.activeTab === s__activeTab).icon} text={s__noActiveTabDataText} />
             </RIT>
             <RIT cnd={!_isEmpty(s__modalData) && s__modalData.id}>
                 <Modal onClose={() => setNoteModalView({})}>
@@ -50,6 +51,8 @@ const mapStateToProps = state => ({
     s__allNotes: filterBasedNotes(state),
     s__pinnedNotes: pinnedNotes(state),
     s__modalData: modalData(state),
+    s__noActiveTabDataText: noActiveTabDataText(state),
+    s__activeTab: activeTab(state),
 });
 
 const mapDispatchToProps = dispatch => ({
