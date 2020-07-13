@@ -25,7 +25,12 @@ export const StyledSidebar = styled("div")({
             fontWeight: "bold",
         }
     },
-    '@media(max-width: 787px)': {
-        position: "absolute"
+    '@media(max-width: 767px)': {
+        position: "absolute",
+        transition: "0.5s ease-in-out",
+        opacity: ({ isExpanded }) => isExpanded ? 1 : 0,
+        zIndex: ({ isExpanded }) => isExpanded ? 11 : -1,
+        top: 0,
+        paddingTop: "40px",
     }
 });

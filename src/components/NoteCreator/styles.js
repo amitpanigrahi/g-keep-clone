@@ -10,8 +10,8 @@ export const StyledNoteCreatorContainer = styled("div")`
     flex-direction: column;
     box-shadow: 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
     transition: all 0.4s ease-in-out;
+    background-color: #fff;
     .title-input {
-        background-color: #fff;
         width: 100%;
         min-height: 43px;
         padding: 10px 15px;
@@ -19,6 +19,7 @@ export const StyledNoteCreatorContainer = styled("div")`
         font-size: 1rem;
         outline: none;
         border: 0;
+        font-weight: bold;
     }
     .desc-input {
         width: 100%;
@@ -29,12 +30,13 @@ export const StyledNoteCreatorContainer = styled("div")`
         padding: 0 15px;
         font-family: inherit;
         transition: all 0.4s ease-in-out;
+        word-break: break-all;
     }
     .footer-panel {
         transition: all 0.4s ease-in-out;
-        height: 0;
         overflow: hidden;
         background-color: #fff;
+        padding: 10px 5px;
     }
     .desc-action {
         height: 0;
@@ -45,23 +47,27 @@ export const StyledNoteCreatorContainer = styled("div")`
             height: auto;
         }
     }
-    :hover {
-        .active .footer-panel {
-            padding: 5px 10px;
-            height: 20px;
-            min-height: 100%;
-        }
-    }
 `;
 
 export const StyledNoteFooter = styled("div")`
     width: 100%;
+    border-top: 1px solid #6e6e6e;
+    padding: 5px;
+    margin-top: 5px;
+    box-shadow: inset 0px 0px 8px -1px #000;
     svg {
-        fill: #6e6e6e;
+        fill: #000;
     }
     .close-option {
         color: #6e6e6e;
         font-size: 14px;
         font-weight: bold;
+        border-radius: 5px;
+        padding: 5px;
+        transition: all 0.4s ease-in-out;
+        &:hover {
+            opacity: .87;
+            background-color: rgba(95,99,104,0.157);
+        }
     }
 `;

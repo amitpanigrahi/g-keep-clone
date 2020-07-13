@@ -1,8 +1,8 @@
 import {action, REQUEST} from "./actionCreator";
-import {CHANGE_TAB, CREATE_OR_UPDATE_NOTE_LIST} from "./actionTypes";
+import {CREATE_OR_UPDATE_NOTE_LIST, UPDATE_UI_SETTINGS} from "./actionTypes";
 
-export const changeTab = {
-    request: (payload) => action(CHANGE_TAB[REQUEST], {payload})
+export const updateUiSettings = {
+    request: (payload) => action(UPDATE_UI_SETTINGS[REQUEST], {payload})
 };
 
 export const createOrUpdateNoteList = {

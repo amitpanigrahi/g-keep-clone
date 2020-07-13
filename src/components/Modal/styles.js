@@ -13,6 +13,14 @@ export const Overlay = styled("div")`
   align-items: center;
   visibility: ${(props) => (props.hiddenProp ? 'hidden' : 'visible')};
   opacity: ${(props) => (props.hiddenProp ? '0' : '1')};
+  &.mob-only {
+    display: none;
+  }
+  @media screen and (max-width: 767px) {
+    &.mob-only {
+        display: flex;
+    }
+  }
 `;
 
 export const ModalContainer = styled("div")`
@@ -22,6 +30,13 @@ export const ModalContainer = styled("div")`
     justify-content: center;
     height: 100%;
     width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    .children {
+        position: relative;
+        z-index: 11;
+    }
     .close {
         margin: 10px 0;
     }

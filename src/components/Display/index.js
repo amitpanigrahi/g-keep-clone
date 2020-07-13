@@ -3,7 +3,7 @@ import NoteCard from "../NoteCard";
 import {StyledNoteListContainer, StyledDisplayWrapper} from "./styles";
 import NoteCreator from "../NoteCreator";
 import {connect} from "react-redux";
-import {allNotes, filterBasedNotes, pinnedNotes} from "../../selectors/notes";
+import {filterBasedNotes, pinnedNotes} from "../../selectors/notes";
 import RIT from "../_generic/RenderIfTrue";
 import NoDataAvailable from "../common/NoDataAvailable";
 import Modal from "../Modal";
@@ -11,7 +11,6 @@ import _isEmpty from "lodash/isEmpty";
 
 const Display = ({s__allNotes, s__pinnedNotes}) => {
     const [showNote, setNoteModalView] = useState({});
-    console.log("s__allNotes>>>>>>", s__allNotes);
     return (
         <StyledDisplayWrapper>
             <NoteCreator/>
@@ -24,18 +23,19 @@ const Display = ({s__allNotes, s__pinnedNotes}) => {
                 </StyledNoteListContainer>
             </RIT>
             <StyledNoteListContainer className={"d_flex justify_content_center"}>
-                <RIT cnd={s__pinnedNotes.length}>
+                <RIT cnd={s__allNotes.length}>
                     <p className={"headline"}>OTHERS</p>
-                </RIT>
-                <RIT cnd={s__allNotes.length} fb={<NoDataAvailable/>}>
                     <div className={"cards-container"}>
                         {s__allNotes.map((val, i) => <NoteCard handleClick={() => setNoteModalView(val)} data={val} key={i}/>)}
                     </div>
                 </RIT>
             </StyledNoteListContainer>
+            <RIT cnd={!s__pinnedNotes.length && !s__allNotes.length}>
+                <NoDataAvailable />
+            </RIT>
             <RIT cnd={!_isEmpty(showNote)}>
-                <Modal onClose={() => setNoteModalView({})}>
-                    <NoteCreator data={showNote}/>
+                <Modal>
+                    <NoteCreator isFocused={true} handleClose={() => setNoteModalView({})} data={showNote}/>
                 </Modal>
             </RIT>
         </StyledDisplayWrapper>

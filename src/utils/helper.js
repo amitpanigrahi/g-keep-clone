@@ -1,3 +1,5 @@
+import _get from "lodash/get";
+
 export const trimLeft = string =>
     string ? string.replace(/^\s+/, "") : string;
 
@@ -17,8 +19,8 @@ export const checkNoteSearchQuery = (query = "", data = {}) => {
         title = "",
         note = "",
     } = data;
-    const stringed = title+" "+note;
-    return (stringed.includes(query.trim()))
+    const stringed = (title+" "+note).toLowerCase();
+    return (stringed.includes(query.trim().toLowerCase()))
 };
 
 export const uuidGenerator = () => {
@@ -32,10 +34,12 @@ export const manageNoteListUpdate = (listData = [], data = {}) => {
   let resp = [...listData];
   const filteredIndex = listData.findIndex(val => val.id === data.id);
   if (filteredIndex >= 0) {
-      resp[filteredIndex] = {...data};
+      resp[filteredIndex] = {...resp[filteredIndex], ...data};
   }
   else {
       resp.push(data);
   }
   return resp;
 };
+
+export const timeSort = (a, b, sortByField = "updated_at") =>  (_get(b, sortByField, 0) - _get(a, sortByField, 0));

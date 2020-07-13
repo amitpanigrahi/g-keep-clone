@@ -1,10 +1,12 @@
 import React from "react";
 import {StyledSidebar} from "./styles";
-import {ARCHIVE_ICON, NOTES_ICON} from "../../constants/imgMap";
+import {ARCHIVE_ICON, NOTES_ICON, THRASH_ICON} from "../../constants/imgMap";
 import {activeTab} from "../../selectors/ui";
 import {connect} from "react-redux";
-import {changeTab} from "../../actions";
+import {updateUiSettings} from "../../actions";
 import TabItem from "./TabItem";
+import {Overlay} from "../Modal/styles";
+import RIT from "../_generic/RenderIfTrue";
 
 const optionList = [
     {
@@ -17,34 +19,47 @@ const optionList = [
         label: "Archived",
         key: "archive",
     },
+    {
+        icon: THRASH_ICON,
+        label: "Trash",
+        key: "deleted",
+    },
 ];
 
 const Sidebar = (props) => {
     const {
         isExpanded,
-        s__activeTab,
-        d__changeTab
+        activeTab,
+        d__updateUiSettings,
+        toggleSidebar,
     } = props;
 
-    const changeTab = key => d__changeTab({activeTab: key});
+    const isSm = window.innerWidth < 768;
+    const changeTab = val => {
+        d__updateUiSettings({activeTab: val.key, activeTabLabel: val.label});
+        if (isSm) {
+            toggleSidebar()
+        }
+    };
     return (
-        <StyledSidebar isExpanded={isExpanded}>
-            {optionList.map((val, i) => {
-                return (
-                    <TabItem key={i} data={val} isExpanded={isExpanded} isActive={s__activeTab === val.key}
-                             handleChange={() => changeTab(val.key)}/>
-                )
-            })}
-        </StyledSidebar>
+        <>
+            <RIT cnd={isExpanded && isSm}>
+                    <Overlay className={"mob-only"} onClick={toggleSidebar}/>
+            </RIT>
+            <StyledSidebar isExpanded={isExpanded}>
+                {optionList.map((val, i) => {
+                    return (
+                        <TabItem key={i} data={val} isExpanded={isExpanded} isActive={activeTab === val.key}
+                                 handleChange={() => changeTab(val)}/>
+                    )
+                })}
+            </StyledSidebar>
+        </>
     )
 };
 
-const mapStateToProps = (state) => ({
-    s__activeTab: activeTab(state)
-});
-
 const mapDispatchToProps = (dispatch) => ({
-    d__changeTab: (data) => dispatch(changeTab.request(data)),
+    d__updateUiSettings: (data) => dispatch(updateUiSettings.request(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(null, mapDispatchToProps)(Sidebar);

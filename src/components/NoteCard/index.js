@@ -10,10 +10,13 @@ const NoteCard = ({data = {}, handleClick}) => {
     } = data;
     const [isMouseOver, setMouseOver] = useState(false);
     return (
-        <StyledNoteCard onClick={handleClick} onMouseOver={() => setMouseOver(true)} onMouseOut={() => setMouseOver(false)} className={`${isMouseOver ? "box" : ""}`}>
-            {title ? <div className={"title"}>{title}</div> : null}
-            <div>
-                {note}
+        <StyledNoteCard>
+            <div onClick={handleClick} onMouseOver={() => setMouseOver(true)}
+                  onMouseOut={() => setMouseOver(false)} className={`card ${isMouseOver ? "box" : ""}`}>
+                {title ? <div className={"title"}>{title}</div> : null}
+                <div className={"desc"}>
+                    {note}
+                </div>
             </div>
         </StyledNoteCard>
     )

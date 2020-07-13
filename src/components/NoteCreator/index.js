@@ -1,81 +1,126 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {StyledNoteCreatorContainer, StyledNoteFooter} from "./styles";
-import {ARCHIVE_ICON} from "../../constants/imgMap";
+import {
+    ARCHIVE_ICON,
+    PIN_ICON,
+    PINNED_ICON,
+    THRASH_ICON,
+    TRASH_RESTORE_ICON,
+    UN_ARCHIVE_ICON
+} from "../../constants/imgMap";
 import {trimLeft, uuidGenerator} from "../../utils/helper";
 import {connect} from "react-redux";
 import {createOrUpdateNoteList} from "../../actions";
+import ActionIcon from "../ActionIcon";
+import RIT from "../_generic/RenderIfTrue";
 
 const initialNoteObj = {
     id: "",
     title: "",
     note: "",
     isPinned: false,
+    isDeleted: false,
     status: "active",
-    created_at: null,
-    updated_at: null,
+    created_at: new Date().getTime(),
+    updated_at: new Date().getTime(),
 };
 
-// new Date().getTime()
-
-const NoteCreator = ({data = {}, d__updateNoteList}) => {
+const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClose}) => {
+    const [noteObj, setNoteObj] = useState({...initialNoteObj, ...data});
     const {
-        id = "",
         title = "",
         note = "",
-    } = data;
-    const [noteObj, setNoteObj] = useState(id ? data : initialNoteObj);
-    const [focused, setFocused] = useState(false);
+    } = noteObj;
+    const descRef = useRef(null);
+    const [focused, setFocused] = useState(isFocused);
     const [cardTitle, setTitle] = useState(title);
     const [cardNote, setNote] = useState(note);
-    const isNew = !!!noteObj.id;
     const restState = () => {
         setNoteObj(initialNoteObj);
         setFocused(false);
         setTitle("");
         setNote("");
     };
-    const updateDoc = () => {
-        d__updateNoteList(noteObj);
+    const updateDoc = (obj = {}) => {
+        let updatedObj = {...noteObj, ...obj, updated_at: new Date().getTime()};
+
+        if (!cardTitle && !cardNote) {
+            if (noteObj.id) {
+                updatedObj = {...updatedObj, isDeleted: true};
+            }
+        } else {
+            if (!noteObj.id) {
+                updatedObj.id = uuidGenerator();
+            }
+        }
+        if (updatedObj.id) {
+            d__updateNoteList(updatedObj);
+        }
+        handleClose && handleClose();
         restState();
     };
-    const handleNoteDelete = (data) => {
-
-    };
-
 
     const handleNoteChanges = () => {
-        if (isNew && !noteObj.id) {
+        if (!!!noteObj.id) {
             const newNote = {
                 ...initialNoteObj,
                 note: cardNote,
                 title: cardTitle,
-                id: uuidGenerator(),
                 created_at: new Date().getTime(),
                 updated_at: new Date().getTime()
             };
             setNoteObj({...newNote});
-        }
-        else {
-            if (!cardTitle && !cardNote) {
-                handleNoteDelete(noteObj);
-                return
-            }
-            const resp = {...noteObj, updated_at: new Date().getTime(), note: cardNote, title: cardTitle,};
-            setNoteObj({...resp});
+        } else {
+            const resp = {...noteObj, note: cardNote, title: cardTitle,};
+            updateNote(resp);
         }
     };
     useEffect(() => {
+        descRef.current.focus();
+        descRef.current.setSelectionRange(cardNote.length, cardNote.length);
+    }, []);
+    useEffect(() => {
         handleNoteChanges();
     }, [cardTitle, cardNote]);
-    console.log(noteObj, ">>>>>");
+    const updateNote = (obj = {}) => {
+        setNoteObj({...noteObj, ...obj})
+    };
+
+    const {
+        status = "",
+        isPinned = false,
+        id,
+        isDeleted
+    } = noteObj;
     return (
         <StyledNoteCreatorContainer>
-            <input onChange={e => setTitle(trimLeft(e.target.value))} value={cardTitle} onFocus={() => setFocused(true)} placeholder={"Title"} className={"title-input"}/>
+            <input onChange={e => setTitle(trimLeft(e.target.value))} value={cardTitle} onFocus={() => setFocused(true)}
+                   placeholder={"Title"} className={"title-input"}/>
             <div className={`d_flex align_items_center flex_column desc-action ${focused ? "active" : ""}`}>
-                <textarea onChange={e => setNote(trimLeft(e.target.value))} value={cardNote} placeholder={"Description"} className={`desc-input`}/>
+                <textarea ref={descRef} onChange={e => setNote(trimLeft(e.target.value))} value={cardNote}
+                          placeholder={"Description"}
+                          className={`desc-input`}/>
                 <StyledNoteFooter className={"footer-panel d_flex justify_content_between align_items_center"}>
-                    <div onClick={() => setNoteObj({...noteObj, status: "archive"})} className={"cursor_pointer"}>{ARCHIVE_ICON}</div>
-                    <div className={"close-option cursor_pointer"} onClick={updateDoc}>CLOSE</div>
+                    <div className={"action-icons d_flex align_items_center"}>
+                        <RIT cnd={!isDeleted}>
+                            {status !== "archive" ?
+                                <ActionIcon icon={ARCHIVE_ICON}
+                                            onClick={() => updateNote({status: "archive"})}/> :
+                                <ActionIcon icon={UN_ARCHIVE_ICON}
+                                            onClick={() => updateNote({status: "active"})}/>
+                            }
+                        </RIT>
+                        {isPinned ?
+                            <ActionIcon icon={PINNED_ICON} onClick={() => updateNote({isPinned: false})}/> :
+                            <ActionIcon icon={PIN_ICON} onClick={() => updateNote({isPinned: true})}/>
+                        }
+                        <RIT cnd={id}>
+                            {!isDeleted ?
+                                <ActionIcon icon={THRASH_ICON} onClick={() => updateDoc({isDeleted: true})}/> :
+                                <ActionIcon icon={TRASH_RESTORE_ICON} onClick={() => updateDoc({isDeleted: false})}/>}
+                        </RIT>
+                    </div>
+                    <div className={"close-option cursor_pointer"} onClick={() => updateDoc({})}>CLOSE</div>
                 </StyledNoteFooter>
             </div>
         </StyledNoteCreatorContainer>
@@ -83,7 +128,7 @@ const NoteCreator = ({data = {}, d__updateNoteList}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-   d__updateNoteList: data => dispatch(createOrUpdateNoteList.request(data))
+    d__updateNoteList: (data) => dispatch(createOrUpdateNoteList.request(data)),
 });
 
 export default connect(null, mapDispatchToProps)(NoteCreator);
