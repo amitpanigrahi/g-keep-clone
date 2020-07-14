@@ -27,10 +27,6 @@ const initialNoteObj = {
 
 const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClose}) => {
     const [isMounted, setMount] = useState(false);
-    const {
-        title: prevTitle = "",
-        note: prevNote = "",
-    } = data;
     const [noteObj, setNoteObj] = useState({...initialNoteObj, ...data});
     const {
         title = "",
@@ -110,7 +106,7 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
     return (
         <StyledNoteCreatorContainer>
             <input onChange={e => setTitle(trimLeft(e.target.value))} value={cardTitle} onFocus={() => setFocused(true)}
-                   placeholder={"Title"} className={"title-input"}/>
+                   placeholder={focused ? "Title" : "Add Note"} className={"title-input"}/>
             <div className={`d_flex align_items_center flex_column desc-action ${focused ? "active" : ""}`}>
                 <textarea ref={descRef} onChange={e => setNote(trimLeft(e.target.value))} value={cardNote}
                           placeholder={"Description"}
