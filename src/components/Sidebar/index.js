@@ -1,23 +1,22 @@
 import React from "react";
 import {StyledSidebar} from "./styles";
-import {connect} from "react-redux";
-import {updateUiSettings} from "../../actions";
 import TabItem from "./TabItem";
 import {Overlay} from "../Modal/styles";
 import RIT from "../_generic/RenderIfTrue";
 import {optionList} from "../../constants/sidebarOptions";
+import {withRouter} from "react-router-dom";
 
 const Sidebar = (props) => {
     const {
         isExpanded,
         activeTab,
-        d__updateUiSettings,
         toggleSidebar,
+        history
     } = props;
 
     const isSm = window.innerWidth < 768;
     const changeTab = val => {
-        d__updateUiSettings({...val});
+        history.push(val);
         if (isSm) {
             toggleSidebar()
         }
@@ -31,7 +30,7 @@ const Sidebar = (props) => {
                 {optionList.map((val, i) => {
                     return (
                         <TabItem key={i} data={val} isExpanded={isExpanded} isActive={activeTab === val.activeTab}
-                                 handleChange={() => changeTab(val)}/>
+                                 handleChange={() => changeTab(val.activeTab)}/>
                     )
                 })}
             </StyledSidebar>
@@ -39,8 +38,4 @@ const Sidebar = (props) => {
     )
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    d__updateUiSettings: (data) => dispatch(updateUiSettings.request(data)),
-});
-
-export default connect(null, mapDispatchToProps)(Sidebar);
+export default withRouter(Sidebar);

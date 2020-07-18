@@ -1,12 +1,20 @@
 import React from 'react';
 import {GlobalStyles} from './styles/global';
-import WorkSpaceComponent from "./containers/WorkSpace";
+import {Route, BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
+import MidGuard from "./components/_App/MidGuard";
 
 const App = () => {
     return (
         <>
             <GlobalStyles/>
-            <WorkSpaceComponent />
+            <Router>
+                <Switch>
+                    <Route exact path={"/:activeTabId?"} component={MidGuard} />
+                    <Route path={"*"}>
+                        <Redirect to="/active" />
+                    </Route>
+                </Switch>
+            </Router>
         </>
     );
 };

@@ -1,7 +1,5 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore} from 'redux';
 import {rootReducer} from "../reducers";
-import logger from "redux-logger";
-import {composeWithDevTools} from "redux-devtools-extension/developmentOnly";
 import {loadState, saveState} from "../utils/localStorage";
 import {debounce} from "../utils/helper";
 

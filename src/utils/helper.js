@@ -1,4 +1,5 @@
 import _get from "lodash/get";
+import {optionList} from "../constants/sidebarOptions";
 
 export const trimLeft = string =>
     string ? string.replace(/^\s+/, "") : string;
@@ -49,3 +50,7 @@ export const manageNoteListUpdate = (listData = [], data = {}) => {
 };
 
 export const timeSort = (a, b, sortByField = "updated_at") =>  (_get(b, sortByField, 0) - _get(a, sortByField, 0));
+
+const tabPredictor = (value) => optionList.find(val => value.includes(val.activeTab));
+
+export const tabMatchObj = (value) => optionList.find(val => val.activeTab === value) || tabPredictor(value) || optionList[0];

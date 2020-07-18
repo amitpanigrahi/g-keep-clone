@@ -16,7 +16,7 @@ export const optionList = [
     {
         icon: THRASH_ICON,
         activeTabLabel: "Trash",
-        activeTab: "deleted",
+        activeTab: "trash",
         noDataText: "Deleted notes can be viewed from here."
     },
 ];
