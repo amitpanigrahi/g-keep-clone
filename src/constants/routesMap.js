@@ -1,4 +1,4 @@
-export const APP_HOME = "/g-keep-clone";
-const ru = (val) => APP_HOME+val;
+export const BASE_URL = "/";
+const ru = route => BASE_URL+route;
 
-export const DEFAULT_ROUTE = ru("/active");
+export const DEFAULT_ROUTE = ru("active/");
