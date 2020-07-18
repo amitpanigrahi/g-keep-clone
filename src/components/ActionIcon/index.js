@@ -4,7 +4,7 @@ import {StyledIcon} from "./styles";
 const ActionIcon = ({icon, onClick}) => {
     return (
         <StyledIcon onClick={() => (onClick && onClick())}
-             className={"cursor_pointer"}>{icon}</StyledIcon>
+             className={"btn btn_hf cursor_pointer border_none"}>{icon}</StyledIcon>
     )
 };
 

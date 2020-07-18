@@ -71,4 +71,20 @@ export const GlobalStyles = createGlobalStyle`
         flex-direction: column;
     }
   }
+  .btn {
+    background: transparent;
+    outline: none;
+    &_hf {
+        &:hover, 
+        &:focus {
+            opacity: .87;
+            background-color: rgba(95,99,104,0.157);
+        }
+    }
+  }
+  .border {
+    &_none {
+        border: none;
+    }
+  }
 `;

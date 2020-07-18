@@ -6,9 +6,9 @@ const TabItem = ({handleChange, isActive = false, data = {}, isExpanded}) => {
         activeTabLabel: label,
     } = data;
     return (
-        <div onClick={handleChange} className={`item d_flex align_items_center ${isActive ? "active" : ""}`}>
+        <button onClick={handleChange} className={`item d_flex align_items_center btn btn_hf border_none ${isActive ? "active" : ""}`}>
             <span className={"icon-wrap"}>{icon}</span><span className={"label"}>{isExpanded ? label : ""}</span>
-        </div>
+        </button>
     )
 };
 

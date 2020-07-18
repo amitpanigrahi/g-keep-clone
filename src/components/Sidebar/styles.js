@@ -5,11 +5,14 @@ export const StyledSidebar = styled("div")({
     transition: "all 0.5s ease-in-out",
     minWidth: ({ isExpanded }) => isExpanded ? "100px" : "40px",
     background: ({ theme }) => theme.body,
+    display: "flex",
+    flexDirection: "column",
     ".item": {
         padding: "12.5px 25px",
         cursor: "pointer",
+        color: ({theme}) => theme.text,
+        borderRadius: "0 25px 25px 0",
         "&.active": {
-            borderRadius: "0 25px 25px 0",
             background: ({theme}) => theme.isLight ? "#feefc3" : "#41331c",
         },
         svg: {

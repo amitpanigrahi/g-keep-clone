@@ -14,7 +14,7 @@ const Header = ({isExpanded, title = "", toggleSidebar}) => {
     return (
         <StyledHeaderWrapper>
             <div className={"burger-title"}>
-                <HamBurger isActive={isExpanded} onClick={toggleSidebar} />
+                <HamBurger className={"btn btn_hf border_none"} isActive={isExpanded} onClick={toggleSidebar} />
                 <div className={"title"}>{title}</div>
             </div>
             <SearchBar/>

@@ -131,7 +131,7 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
                                 <ActionIcon icon={TRASH_RESTORE_ICON} onClick={() => updateDoc({isDeleted: false})}/>}
                         </RIT>
                     </div>
-                    <div className={"close-option cursor_pointer"} onClick={() => updateDoc({})}>CLOSE</div>
+                    <button className={"close-option cursor_pointer btn btn_hf border_none"} onClick={() => updateDoc({})}>CLOSE</button>
                 </StyledNoteFooter>
             </div>
         </StyledNoteCreatorContainer>
