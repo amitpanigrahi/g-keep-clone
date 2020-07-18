@@ -1,18 +1,9 @@
 import React, {useEffect, useState, useRef} from "react";
-import {StyledNoteCreatorContainer, StyledNoteFooter} from "./styles";
-import {
-    ARCHIVE_ICON,
-    PIN_ICON,
-    PINNED_ICON,
-    THRASH_ICON,
-    TRASH_RESTORE_ICON,
-    UN_ARCHIVE_ICON
-} from "../../constants/imgMap";
+import {StyledNoteCreatorContainer} from "./styles";
 import {debounce, trimLeft, uuidGenerator} from "../../utils/helper";
 import {connect} from "react-redux";
 import {createOrUpdateNoteList} from "../../actions";
-import ActionIcon from "../ActionIcon";
-import RIT from "../_generic/RenderIfTrue";
+import ActionControlPanel from "../NoteActionControl";
 
 const initialNoteObj = {
     id: "",
@@ -96,13 +87,6 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
             debounce(() => updateDoc({note: cardNote, title: cardTitle}, true), 1500)();
         }
     }, [noteObj]);
-
-    const {
-        status = "",
-        isPinned = false,
-        id,
-        isDeleted
-    } = noteObj;
     return (
         <StyledNoteCreatorContainer>
             <input onChange={e => setTitle(trimLeft(e.target.value))} value={cardTitle} onFocus={() => setFocused(true)}
@@ -111,28 +95,7 @@ const NoteCreator = ({data = {}, d__updateNoteList, isFocused = false, handleClo
                 <textarea ref={descRef} onChange={e => setNote(trimLeft(e.target.value))} value={cardNote}
                           placeholder={"Description"}
                           className={`desc-input`}/>
-                <StyledNoteFooter className={"footer-panel d_flex justify_content_between align_items_center"}>
-                    <div className={"action-icons d_flex align_items_center"}>
-                        <RIT cnd={!isDeleted}>
-                            {status !== "archive" ?
-                                <ActionIcon icon={ARCHIVE_ICON}
-                                            onClick={() => updateNote({status: "archive"})}/> :
-                                <ActionIcon icon={UN_ARCHIVE_ICON}
-                                            onClick={() => updateNote({status: "active"})}/>
-                            }
-                        </RIT>
-                        {isPinned ?
-                            <ActionIcon icon={PINNED_ICON} onClick={() => updateNote({isPinned: false})}/> :
-                            <ActionIcon icon={PIN_ICON} onClick={() => updateNote({isPinned: true})}/>
-                        }
-                        <RIT cnd={id}>
-                            {!isDeleted ?
-                                <ActionIcon icon={THRASH_ICON} onClick={() => updateDoc({isDeleted: true})}/> :
-                                <ActionIcon icon={TRASH_RESTORE_ICON} onClick={() => updateDoc({isDeleted: false})}/>}
-                        </RIT>
-                    </div>
-                    <button className={"close-option cursor_pointer btn btn_hf border_none"} onClick={() => updateDoc({})}>CLOSE</button>
-                </StyledNoteFooter>
+                <ActionControlPanel data={noteObj} handleNoteChange={updateNote} handleNoteSubmit={updateDoc} />
             </div>
         </StyledNoteCreatorContainer>
     )

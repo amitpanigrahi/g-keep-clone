@@ -54,3 +54,9 @@ export const timeSort = (a, b, sortByField = "updated_at") =>  (_get(b, sortByFi
 const tabPredictor = (value) => optionList.find(val => value.includes(val.activeTab));
 
 export const tabMatchObj = (value) => optionList.find(val => val.activeTab === value) || tabPredictor(value) || optionList[0];
+
+export const _handleKeyDown = ({key}, trigger) => {
+    if (key === "Escape") {
+        trigger()
+    }
+};

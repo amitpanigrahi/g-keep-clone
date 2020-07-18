@@ -87,4 +87,15 @@ export const GlobalStyles = createGlobalStyle`
         border: none;
     }
   }
+  input,
+  textarea {
+    color: ${({theme}) => theme.text};
+    caret-color: ${({theme}) => theme.isLight ? "#000" : "#fff"};
+    background: ${({theme}) => theme.isLight ? "#fff" : "#202124"};
+  }
+  .w {
+    &-100 {
+        width: 100%;
+    }
+  }
 `;

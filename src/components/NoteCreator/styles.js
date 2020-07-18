@@ -10,7 +10,7 @@ export const StyledNoteCreatorContainer = styled("div")`
     flex-direction: column;
     box-shadow: 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
     transition: all 0.4s ease-in-out;
-    background-color: #fff;
+    background-color: ${({theme}) => theme.isLight ? "#fff" : "#202124"};
     .title-input {
         width: 100%;
         min-height: 43px;
@@ -35,7 +35,7 @@ export const StyledNoteCreatorContainer = styled("div")`
     .footer-panel {
         transition: all 0.4s ease-in-out;
         overflow: hidden;
-        background-color: #fff;
+        background-color: ${({theme}) => theme.isLight ? "#fff" : "#202124"};
         padding: 10px 5px;
     }
     .desc-action {
@@ -45,29 +45,6 @@ export const StyledNoteCreatorContainer = styled("div")`
         &.active {
             min-height: 10px;
             height: auto;
-        }
-    }
-`;
-
-export const StyledNoteFooter = styled("div")`
-    width: 100%;
-    border-top: 1px solid #6e6e6e;
-    padding: 5px;
-    margin-top: 5px;
-    box-shadow: inset 0px 0px 8px -1px #000;
-    svg {
-        fill: #000;
-    }
-    .close-option {
-        color: #6e6e6e;
-        font-size: 14px;
-        font-weight: bold;
-        border-radius: 5px;
-        padding: 5px;
-        transition: all 0.4s ease-in-out;
-        &:hover {
-            opacity: .87;
-            background-color: rgba(95,99,104,0.157);
         }
     }
 `;

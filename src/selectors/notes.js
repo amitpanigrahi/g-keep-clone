@@ -13,7 +13,7 @@ export const filterBasedNotes = state => {
 
 const filterNoteList = state => {
   const activeTab = getActiveTab(state);
-  const isDeletedTab = (activeTab === "deleted");
+  const isDeletedTab = (activeTab === "trash");
   const searchQuery = getSearchQuery(state);
   const availableNotes = allNotes(state);
   return availableNotes.filter(val => !!val && (val.id && (!!val.title || !!val.note) && searchQuery ? (checkNoteSearchQuery(searchQuery, val) && !val.isDeleted) : ((isDeletedTab && val.isDeleted) || (val.status === activeTab && !val.isDeleted)))).sort(timeSort);

@@ -40,6 +40,7 @@ export const StyledInputContainer = styled("div")`
         font: normal 16px Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
         -webkit-font-variant-ligatures: none;
         color: ${({theme}) => theme.text};
+        caret-color: #000;
         font-variant-ligatures: none;
         height: 46px;
         outline: none;
