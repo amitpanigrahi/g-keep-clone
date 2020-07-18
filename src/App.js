@@ -2,7 +2,7 @@ import React from 'react';
 import {GlobalStyles} from './styles/global';
 import {Route, BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
 import MidGuard from "./components/_App/MidGuard";
-import {DEFAULT_ROUTE} from "./constants/routesMap";
+import {DEFAULT_ROUTE, APP_HOME} from "./constants/routesMap";
 
 const App = () => {
     return (
@@ -10,7 +10,7 @@ const App = () => {
             <GlobalStyles/>
             <Router>
                 <Switch>
-                    <Route exact path={"/:activeTabId?"} component={MidGuard} />
+                    <Route exact path={`${APP_HOME}/:activeTabId?`} component={MidGuard} />
                     <Route path={"*"}>
                         <Redirect to={DEFAULT_ROUTE} />
                     </Route>
